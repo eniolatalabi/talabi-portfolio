@@ -1,0 +1,425 @@
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 90vh;
+  transition: background 0.5s ease;
+  align-items: center;
+  width: 100%;
+  transition: all 0.5s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+.hero.night {
+  color: #ffffff;
+}
+
+.hero.day {
+  background: linear-gradient(to bottom, #87ceeb, #ffffff);
+  color: #333333;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5.5rem;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Left Section */
+.hero-left {
+  flex: 1;
+  padding: 2rem;
+  max-width: 600px;
+}
+
+.hero-left h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.hero-left h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-left h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.social-icons a {
+  color: #8e8e8e;
+  text-decoration: none;
+}
+
+.social-icons svg {
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+  opacity: 0.8;
+}
+
+.hero.night .social-icons svg:hover {
+  transform: scale(1.2);
+  color: #ffffff;
+}
+
+.hero.day .social-icons svg:hover {
+  transform: scale(1.2);
+}
+
+/* CTA Button */
+.cta-button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button.night {
+  background-color: #243b55;
+  color: #ffffff;
+}
+
+.cta-button.night:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button.day {
+  background-color: #ffb347;
+  color: #ffffff;
+}
+
+.cta-button.day:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* Right Section */
+.hero-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 500px;
+}
+
+/* Theme Elements */
+.theme-element {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+/* Stars Animation */
+.stars-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(255, 255, 255, 0)),
+    radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(255, 255, 255, 0)),
+    radial-gradient(2px 2px at 60px 20px, #ffffff, rgba(255, 255, 255, 0)),
+    radial-gradient(2px 2px at 80px 40px, #ffffff, rgba(255, 255, 255, 0)),
+    radial-gradient(2px 2px at 100px 60px, #ffffff, rgba(255, 255, 255, 0)),
+    radial-gradient(2px 2px at 120px 10px, #ffffff, rgba(255, 255, 255, 0)),
+    radial-gradient(2px 2px at 140px 30px, #ffffff, rgba(255, 255, 255, 0)),
+    radial-gradient(2px 2px at 160px 50px, #ffffff, rgba(255, 255, 255, 0));
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: twinkle 5s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.5;
+    background-position: 0 0, 0 0, 0, 0, 0 0, 0 0, 0 0, 0 0;
+  }
+  50% {
+    opacity: 1;
+    background-position: 5px 5px, -5px 10px, 10px -5px, -10px -10px, 5px -10px, -5px -5px, 10px 5px, -10px 10px;
+  }
+  100% {
+    opacity: 0.5;
+    background-position: 10px 10px, -10px 15px, 15px -10px, -15px -15px, 10px -15px, -10px -10px, 15px 10px, -15px 15px;
+  }
+}
+
+/* Card */
+.info-card {
+  width: 350px;
+  height: 300px;
+  position: relative;
+  z-index: 1;
+  background: #000000;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero.night .info-card {
+  background: #1c1c1c;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.hero.day .info-card {
+  background: #1c1c1c;;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: #ffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.card-content h4 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+
+.card-content p {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+/* Icons Under Card */
+.card-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  z-index: 1;
+}
+
+.icon-wrapper {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #1c1c1c;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.hero.night .icon-wrapper {
+  background-color: #1c1c1c;
+}
+
+.hero.day .icon-wrapper {
+  background-color: #1c1c1c;
+}
+
+.icon-wrapper svg {
+  font-size: 1.3rem;
+  color: #ffff;
+  transition: color 0.3s ease;
+}
+
+.hero.day .icon-wrapper svg {
+  color: #ffff;
+}
+
+.icon-wrapper.active-icon {
+  transform: scale(1.1);
+}
+
+.hero.night .icon-wrapper.active-icon {
+  background-color: #2D3E50;
+}
+
+.hero.day .icon-wrapper.active-icon {
+  background-color: #ffb347;
+}
+
+.icon-wrapper.active-icon svg {
+  color: #ffffff;
+}
+
+.icon-wrapper:hover {
+  transform: scale(1.1);
+}
+
+.hero.night .icon-wrapper:hover {
+  background-color: #053250;
+}
+
+.hero.day .icon-wrapper:hover {
+  background-color: #f49a2b;
+}
+
+.icon-wrapper:hover svg {
+  color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 900px;
+  }
+  
+  .hero-left h1 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    flex-direction: column;
+    padding: 3rem 2rem;
+  }
+  
+  .hero-left, .hero-right {
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+  }
+  
+  .hero-left {
+    margin-bottom: 4rem;
+  }
+  
+  .social-icons {
+    justify-content: center;
+  }
+  
+  .info-card {
+    width: 400px;
+    margin: 0 auto 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-left h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-left h3 {
+    font-size: 1.2rem;
+  }
+  
+  .info-card {
+    width: 100%;
+    max-width: 350px;
+  }
+  
+  .card-icons {
+    flex-wrap: wrap;
+  }
+  
+  .icon-wrapper {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .icon-wrapper svg {
+    font-size: 1.1rem;
+  }
+}
+  
+
+
+  
+  /* Floating animation */
+  /* @keyframes float {
+    0%, 100% {
+      transform: translateY(-10px);
+    }
+    50% {
+      transform: translateY(10px);
+    }
+  }
+  .background-animation {
+    position: absolute;
+    top: 10%; 
+    right: 10%;
+    width: 200px;
+    height: 200px;
+    z-index: 0;
+  }
+  
+  .background-animation .moon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: 20%;
+    right: 0%;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #d6d6d6);
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5);
+    animation: float 3s infinite ease-in-out;
+  }
+  
+  .background-animation .sun {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffcc33, #ffa500);
+    animation: float 3s infinite ease-in-out;
+  } */

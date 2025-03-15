@@ -1,25 +1,39 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import NavBar from './Components/NavBar';
+import Hero from './Components/HeroSection';
+import About from './Components/About';
+// import Projects from './Components/Projects';
+// import Contact from './Components/Contact';
 
-function App() {
+const App = () => {
+  const [isNightMode, setIsNightMode] = useState(true);
+
+  const handleThemeToggle = (nightMode) => {
+    setIsNightMode(nightMode);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`app ${isNightMode ? 'night' : 'day'}`}>
+      <Router>
+        <NavBar onThemeToggle={handleThemeToggle} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Hero isNightMode={isNightMode} />
+                <About isNightMode={isNightMode} />
+                {/* <Projects isNightMode={isNightMode} />
+                <Contact isNightMode={isNightMode} /> */}
+              </>
+            }
+          />
+        </Routes>
+      </Router>
     </div>
   );
-}
+};
 
 export default App;

@@ -1,0 +1,178 @@
+/* General Section Styles */
+.about-skillset {
+    min-height: 100vh;
+    background-color: #1f1f1f;
+    color: #fff;
+    /* padding: 2rem 0; */
+    display: flex;
+    /* align-items: flex-start;  */
+  }
+  
+  .about-skillset.day {
+    background: linear-gradient(to bottom, #fcfefe, #fff);
+    color: #333;
+  }
+  
+  .about-container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start; 
+    padding: 1rem 5.5rem;
+    width: 100%;
+    /* max-width: 1200px;
+    margin: 0 auto; */
+    text-align: center;
+  }
+
+  
+  /* Profile Section */
+  .left-fixed {
+    flex: 1.4;
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    height: 80%;
+  }
+  
+  .left-fixed img {
+    width: 60%;
+    border-radius: 50%;
+    border: 3px solid #333;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+  .about-skillset.day {
+  .express {
+    background-color: #FFB347;
+    border-radius: 30%;
+  }
+}
+  
+  /* Content Section */
+  .right-content {
+    flex: 1.6;
+    display: flex;
+    flex-direction: column;
+    /* gap: 0.5rem; */
+  }
+  
+  .about-text h2,
+  .skillset h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  
+  .about-text p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    text-align: start;
+  }
+  
+  /* Icon Styles */
+  .major-icons,
+  .small-icons {
+    display: flex;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center; 
+    justify-content: space-between;
+  }
+  
+  .small-icons {
+    justify-content: space-around;
+  }
+  .icon-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .icon {
+    font-size: 4.2rem; 
+    transition: transform 0.3s ease;
+  }
+  
+  .icon.faded {
+    font-size: 2.5rem; 
+    opacity: 0.7;
+  }
+  
+  .icon-container:hover .icon-tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .icon-tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Colors for icons */
+  .icon.html {
+    color: #e34c26;
+  }
+  
+  .icon.javascript {
+    color: #f0db4f;
+  }
+  
+  .icon.react {
+    color: #61dafb;
+  }
+  
+  .icon.nodejs {
+    color: #3c873a;
+  }
+  
+  .icon.mongo {
+    color: #4DB33D;
+  }
+  
+  .icon.express {
+    color: #ffffff;
+  }
+  
+  .icon.tailwind {
+    color: #06B6D4;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .about-container {
+      flex-direction: column;
+      text-align: center;
+      padding: 1rem; 
+    }
+  
+    .left-fixed {
+      justify-content: center; 
+      padding-right: 0;
+      margin-bottom: 2rem;
+    }
+  
+    .left-fixed img {
+      width: 60%;
+    }
+  
+    .icon {
+      font-size: 3rem;
+    }
+  
+    .icon.faded {
+      font-size: 2rem; 
+    }
+  
+    .icon-tooltip {
+      font-size: 0.8rem; 
+    }
+  }
