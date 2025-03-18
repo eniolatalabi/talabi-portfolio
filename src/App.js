@@ -4,6 +4,7 @@ import './App.css';
 import NavBar from './Components/NavBar';
 import Hero from './Components/HeroSection';
 import About from './Components/About';
+// import WhatICanDo from './Components/WhatICanDo'
 // import Projects from './Components/Projects';
 // import Contact from './Components/Contact';
 
@@ -25,6 +26,7 @@ const App = () => {
               <>
                 <Hero isNightMode={isNightMode} />
                 <About isNightMode={isNightMode} />
+                {/* <WhatICanDo isNightMode={isNightMode} /> */}
                 {/* <Projects isNightMode={isNightMode} />
                 <Contact isNightMode={isNightMode} /> */}
               </>

@@ -42,13 +42,13 @@ const HeroSection = ({ isNightMode = true }) => {
           <h1>Eniola Solomon Talabi</h1>
           <h3>Full-Stack Web Developer</h3>
           <div className="social-icons">
-            <a href="#" aria-label="GitHub Profile">
+            <a href="https://github.com/eniolatalabi" aria-label="GitHub Profile">
               <FaGithub />
             </a>
-            <a href="#" aria-label="LinkedIn Profile">
+            <a href="https://www.linkedin.com/in/eniola-solomon-talabi-723648271?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" aria-label="LinkedIn Profile">
               <FaLinkedin />
             </a>
-            <a href="#" aria-label="Twitter Profile">
+            <a href="https://x.com/abgriffinn?s=21" aria-label="Twitter Profile">
               <FaTwitter />
             </a>
           </div>
@@ -73,7 +73,7 @@ const HeroSection = ({ isNightMode = true }) => {
             {activeTab === "bio" && (
               <div className="card-content">
                 <h4>Bio</h4>
-                <p>Specialization: ReactJS Developer</p>
+                <p>Specialization: MERN Stack</p>
                 <p>Strengths: Flexibility, Attention to Detail</p>
                 <p>Soft skills: Communication, Time Management</p>
               </div>
