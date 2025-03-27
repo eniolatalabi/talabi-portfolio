@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import { FaBars, FaTimes } from 'react-icons/fa';
@@ -26,7 +28,13 @@ const NavBar = ({ onThemeToggle }) => {
   return (
     <nav className={`navbar ${isNightMode ? 'night' : 'day'}`}>
       <div className="logo">
-        <ScrollLink to="home" smooth={true} duration={500} onClick={closeMenu}>
+        <ScrollLink 
+          to="home" 
+          smooth={true} 
+          duration={500} 
+          offset={-70} // Adjust offset if you have a fixed header
+          onClick={closeMenu}
+        >
           <img src={logo} alt="Logo" />
         </ScrollLink>
       </div>
@@ -37,17 +45,35 @@ const NavBar = ({ onThemeToggle }) => {
 
       <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
         <li>
-          <ScrollLink to="about" smooth={true} duration={500} onClick={closeMenu}>
+          <ScrollLink 
+            to="about" 
+            smooth={true} 
+            duration={500} 
+            offset={-70} 
+            onClick={closeMenu}
+          >
             About
           </ScrollLink>
         </li>
         <li>
-          <ScrollLink to="projects" smooth={true} duration={500} onClick={closeMenu}>
+          <ScrollLink 
+            to="projects" 
+            smooth={true} 
+            duration={500} 
+            offset={-70} 
+            onClick={closeMenu}
+          >
             Projects
           </ScrollLink>
         </li>
         <li>
-          <ScrollLink to="contact" smooth={true} duration={500} onClick={closeMenu}>
+          <ScrollLink 
+            to="contact" 
+            smooth={true} 
+            duration={500} 
+            offset={-70} 
+            onClick={closeMenu}
+          >
             Contact
           </ScrollLink>
         </li>

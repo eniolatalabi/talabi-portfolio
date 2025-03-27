@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Element } from 'react-scroll';
 import './App.css';
 import NavBar from './Components/NavBar';
 import Hero from './Components/HeroSection';
 import About from './Components/About';
-// import WhatICanDo from './Components/WhatICanDo'
-// import Projects from './Components/Projects';
-// import Contact from './Components/Contact';
+import Projects from './Components/Projects';
 
 const App = () => {
   const [isNightMode, setIsNightMode] = useState(true);
@@ -17,23 +15,19 @@ const App = () => {
 
   return (
     <div className={`app ${isNightMode ? 'night' : 'day'}`}>
-      <Router>
-        <NavBar onThemeToggle={handleThemeToggle} />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Hero isNightMode={isNightMode} />
-                <About isNightMode={isNightMode} />
-                {/* <WhatICanDo isNightMode={isNightMode} /> */}
-                {/* <Projects isNightMode={isNightMode} />
-                <Contact isNightMode={isNightMode} /> */}
-              </>
-            }
-          />
-        </Routes>
-      </Router>
+      <NavBar onThemeToggle={handleThemeToggle} />
+      <main>
+        <Element name="home">
+          <Hero isNightMode={isNightMode} />
+        </Element>
+        <Element name="about">
+          <About isNightMode={isNightMode} />
+        </Element>
+        <Element name="projects">
+          <Projects isNightMode={isNightMode} />
+        </Element>
+        {/* Add Contact component when ready */}
+      </main>
     </div>
   );
 };

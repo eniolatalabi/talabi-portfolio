@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import {
   FaGithub,
   FaLinkedin,
@@ -10,6 +10,7 @@ import {
   FaBriefcase
 } from "react-icons/fa";
 import "./HeroSection.css";
+import CV from "../Assets/EST CV.pdf"
 
 const HeroSection = ({ isNightMode = true }) => {
   const [activeTab, setActiveTab] = useState("bio");
@@ -53,8 +54,12 @@ const HeroSection = ({ isNightMode = true }) => {
             </a>
           </div>
           <button className={`cta-button ${isNightMode ? "night" : "day"}`}>
-            <a href="#" download>
-              Download resume
+              <a 
+                href={CV}
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+              Download CV
             </a>
           </button>
         </div>

@@ -19,7 +19,7 @@ import {
   SiTypescript,
 } from "react-icons/si";
 
-const About = ({ isNightMode = true }) => {
+const About = ({ isNightMode = true, id }) => {
   // Calculate years of experience
   const startDate = new Date("2023-02-01");
   const currentDate = new Date();

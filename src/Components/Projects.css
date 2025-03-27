@@ -1,0 +1,471 @@
+/* Projects.css - Complete Updated Version */
+
+/* Base Styles */
+.selected-works {
+  min-height: 100vh;
+  padding: 60px 5%;
+  text-align: center;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.project-section {
+  padding: 1rem 2.2rem;
+  width: 100%;
+  max-width: 1450px;
+  margin: 0 auto;
+}
+
+/* Night Mode Styles */
+.selected-works.night {
+  color: #f0f0f0;
+  background-color: #121212;
+}
+
+.selected-works.night .card {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.selected-works.night .card.white {
+  box-shadow: 0 6px 12px rgba(255,255,255,0.1);
+}
+
+/* Day Mode Styles */
+.selected-works.day {
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Title Styles */
+.selected-works .title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 60px;
+  text-align: center;
+  position: relative;
+  color: inherit;
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* Grid Layout */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Card Styles */
+.card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 380px;
+  transition: all 0.4s ease;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  perspective: 1000px;
+  cursor: pointer;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.card.black {
+  background-color: #000;
+  color: white;
+}
+
+.card.white {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Background Image Styles */
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.background.hovered {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.card.white .background.hovered {
+  background: rgba(144, 144, 144, 0.6);
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8) saturate(0.9);
+  transition: all 0.4s ease;
+  opacity: 0;
+}
+
+.background.hovered .project-image {
+  opacity: 1;
+  filter: brightness(0.6) saturate(1.1);
+  transform: scale(1.05);
+}
+
+/* Content Styles */
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  z-index: 2;
+}
+
+/* Title Positioning */
+.project-title {
+  font-size: 2rem;
+  font-weight: 700;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Text Visibility Enhancements */
+.card.black .project-title,
+.card.black .project-description {
+  text-shadow: 
+    0 0 8px rgba(0,0,0,0.8),
+    0 0 4px rgba(0,0,0,0.8),
+    0 0 2px rgba(0,0,0,0.8);
+  color: #fff;
+}
+
+.card.white .project-title,
+.card.white .project-description {
+  text-shadow: 
+    0 0 8px rgba(255,255,255,0.8),
+    0 0 4px rgba(255,255,255,0.8),
+    0 0 2px rgba(255,255,255,0.8);
+  color: #000;
+}
+
+/* Description Styles */
+.project-description {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 80%;
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-top: 5px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.project-description.hovered {
+  opacity: 1;
+  max-height: 100px;
+}
+
+/* Tech Stack Icons */
+.stack-icons {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  z-index: 3;
+}
+
+.tech-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  margin-left: -10px;
+  position: relative;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.card.white .tech-icon {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+
+.react-icon { color: #61DAFB !important; }
+.node-icon { color: #68A063 !important; }
+.mongo-icon { color: #47A248 !important; }
+.antd-icon { color: #1890FF !important; }
+.tailwind-icon { color: #38B2AC !important; }
+.css-icon { color: #1572B6 !important; }
+.vue-icon { color: #4FC08D !important; }
+.firebase-icon { color: #FFCA28 !important; }
+
+.tech-icon:hover {
+  transform: scale(1.1);
+}
+
+.tech-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  margin-bottom: 8px;
+}
+
+.tech-icon:hover .tech-tooltip {
+  opacity: 1;
+}
+
+/* Action Buttons */
+.actions {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 3;
+}
+
+.action-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+}
+
+.card.black .action-button {
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+}
+
+.card.white .action-button {
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+}
+
+.action-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  margin-bottom: 8px;
+}
+
+.action-button:hover {
+  transform: scale(1.1);
+}
+
+.action-button:hover .action-tooltip {
+  opacity: 1;
+}
+
+/* Live Button Styles */
+.card.black .live-btn {
+  background-color: #243b55;
+  color: #fff;
+}
+
+.card.white .live-btn {
+  background-color: #243b55;
+  color: #fff;
+}
+
+.selected-works.day .card.black .live-btn {
+  background-color: #ffb347;
+  color: #fff;
+}
+
+.selected-works.day .card.white .live-btn {
+  background-color: #ffb347;
+  color: #fff;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments */
+
+/* Large Screens (3 columns) */
+@media (min-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .project-section {
+    padding: 0 1rem;
+  }
+}
+
+/* Medium Screens (2 columns) */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .project-section {
+    padding: 0 0;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .card {
+    height: 350px;
+  }
+  
+  .project-title {
+    font-size: 1.8rem;
+  }
+  
+  .background.hovered + .content .project-title {
+    font-size: 1.6rem;
+  }
+  
+  .project-description {
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile Screens (1 column) */
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .project-section {
+    padding: 0 0;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .selected-works {
+    padding: 40px 20px;
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+  
+  .card {
+    height: 320px;
+    width: 100%;
+  }
+  
+  .project-title {
+    font-size: 1.8rem;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-top: 20px;
+  }
+  
+  .project-description {
+    font-size: 0.9rem;
+    width: 90%;
+    opacity: 1;
+    max-height: 100px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-top: 15px;
+  }
+  
+  .tech-icon, .action-button {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+}
+
+/* Small Mobile Screens */
+@media (max-width: 480px) {
+  .card {
+    height: 280px;
+  }
+  
+  .project-title {
+    font-size: 1.6rem;
+  }
+  
+  .project-description {
+    font-size: 0.85rem;
+  }
+}
+
+/* Desktop Specific Styles */
+@media (min-width: 769px) {
+  .project-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .background.hovered + .content .project-title {
+    top: 30%;
+    font-size: 1.8rem;
+    transform: translate(-50%, -50%);
+  }
+}
+
