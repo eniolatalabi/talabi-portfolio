@@ -1,27 +1,25 @@
 /* General Section Styles */
 .about-skillset {
-    min-height: 100vh;
-    background-color: #1f1f1f;
-    color: #fff;
-    /* padding: 2rem 0; */
-    display: flex;
-    /* align-items: flex-start;  */
+  min-height: 100vh;
+  padding: 60px 5%;
+  text-align: center;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #212121;
   }
   
   .about-skillset.day {
-    background: linear-gradient(to bottom, #fcfefe, #fff);
+    background:#f8f9fa;
     color: #333;
   }
   
   .about-container {
-    display: flex;
-    justify-content: space-between; 
-    align-items: flex-start; 
-    padding: 1rem 5.5rem;
+    padding: 1rem 2.5rem;
     width: 100%;
-    /* max-width: 1200px;
-    margin: 0 auto; */
-    text-align: center;
+    max-width: 1250px;
+    margin: 0 auto;
+    display: flex;
   }
 
   
@@ -29,7 +27,7 @@
   .left-fixed {
     flex: 1.4;
     display: flex;
-    justify-content: flex-start; 
+    justify-content: start; 
     align-items: center;
     height: 80%;
   }
@@ -39,6 +37,7 @@
     border-radius: 50%;
     border: 3px solid #333;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    margin-top: 5rem;
   }
   .about-skillset.day {
   .express {
@@ -57,7 +56,7 @@
   
   .about-text h2,
   .skillset h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 1rem;
     position: relative;
   }
@@ -166,16 +165,20 @@
   }
   }
   @media (max-width: 768px) {
+    .about-skillset {
+      padding: 0 0;
+    }
+
     .about-container {
       flex-direction: column;
       text-align: center;
-      padding: 1rem;
+      padding: 0 0;
+      width: 75%;
     }
   
     .left-fixed {
       justify-content: center; 
       padding-right: 0;
-      margin-bottom: 2rem;
     }
   
     .left-fixed img {
@@ -196,7 +199,7 @@
 
     .about-text p{
       font-size: 0.8rem;
-      text-align: start;
+      text-align: center;
       font-weight: 100;
       line-height: 1.8;
     }

@@ -1,9 +1,6 @@
-/* Projects.css - Complete Updated Version */
-
-/* Base Styles */
 .selected-works {
   min-height: 100vh;
-  padding: 60px 5%;
+  padding: 100px 5%;
   text-align: center;
   transition: all 0.3s ease;
   width: 100%;
@@ -13,14 +10,15 @@
 .project-section {
   padding: 1rem 2.2rem;
   width: 100%;
-  max-width: 1450px;
+  max-width: 1250px;
   margin: 0 auto;
 }
 
 /* Night Mode Styles */
 .selected-works.night {
   color: #f0f0f0;
-  background-color: #121212;
+  background-color: #212121;
+
 }
 
 .selected-works.night .card {
@@ -33,7 +31,7 @@
 
 /* Day Mode Styles */
 .selected-works.day {
-  background-color: #ffffff;
+  background-color: #f8f9fa;
   color: #333;
 }
 
@@ -60,9 +58,9 @@
 /* Card Styles */
 .card {
   position: relative;
-  border-radius: 12px;
+  /* border-radius: 12px; */
   overflow: hidden;
-  height: 380px;
+  height: 310px;
   transition: all 0.4s ease;
   box-shadow: 0 6px 12px rgba(0,0,0,0.1);
   perspective: 1000px;
@@ -132,7 +130,7 @@
 
 /* Title Positioning */
 .project-title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   width: 100%;
@@ -140,6 +138,7 @@
   margin: 0;
   padding: 0 20px;
   box-sizing: border-box;
+  margin-top: -1.2rem;
 }
 
 /* Text Visibility Enhancements */
@@ -364,7 +363,7 @@
   .project-section {
     padding: 0 0;
     width: 100%;
-    max-width: 800px;
+    max-width: 700px;
     margin: 0 auto;
   }
   
@@ -392,7 +391,7 @@
   }
   .project-section {
     padding: 0 0;
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
   }
   
@@ -440,6 +439,12 @@
 
 /* Small Mobile Screens */
 @media (max-width: 480px) {
+  .selected-works .title {
+    font-size: 1.5rem;
+  }
+  .project-section{ 
+    max-width: 300px;
+  }
   .card {
     height: 280px;
   }
@@ -455,6 +460,8 @@
 
 /* Desktop Specific Styles */
 @media (min-width: 769px) {
+
+
   .project-title {
     position: absolute;
     top: 50%;

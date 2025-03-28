@@ -5,6 +5,8 @@ import NavBar from './Components/NavBar';
 import Hero from './Components/HeroSection';
 import About from './Components/About';
 import Projects from './Components/Projects';
+import Contact from './Components/Contact';
+import Footer from './Components/Footer'
 
 const App = () => {
   const [isNightMode, setIsNightMode] = useState(true);
@@ -26,7 +28,12 @@ const App = () => {
         <Element name="projects">
           <Projects isNightMode={isNightMode} />
         </Element>
-        {/* Add Contact component when ready */}
+        <Element name="contact">
+          <Contact isNightMode={isNightMode} />
+        </Element>
+        {/* <Element name="footer">
+          <Footer isNightMode={isNightMode} />
+        </Element> */}
       </main>
     </div>
   );

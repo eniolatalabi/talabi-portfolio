@@ -59,7 +59,7 @@ const HeroSection = ({ isNightMode = true }) => {
                 target="_blank" 
                 rel="noopener noreferrer"
               >
-              Download CV
+              Preview Resume
             </a>
           </button>
         </div>

@@ -7,7 +7,6 @@ body {
   transition: background-color 0.5s ease, color 0.5s ease;
   padding: 0;
   box-sizing: border-box;
-  width: 100vw;
 }
 
 
@@ -17,6 +16,5 @@ body {
 }
 
 .app.day {
-  background-color: #ecf0f1;
-  color: #87ceeb;
+  background-color: #ffffff;
 }

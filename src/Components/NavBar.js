@@ -27,6 +27,8 @@ const NavBar = ({ onThemeToggle }) => {
 
   return (
     <nav className={`navbar ${isNightMode ? 'night' : 'day'}`}>
+      <div className='nav-container'>
+
       <div className="logo">
         <ScrollLink 
           to="home" 
@@ -103,6 +105,7 @@ const NavBar = ({ onThemeToggle }) => {
             {isNightMode ? 'NIGHT' : 'DAY'}
           </div>
         </div>
+      </div>
       </div>
     </nav>
   );

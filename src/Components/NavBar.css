@@ -3,17 +3,25 @@
 
 
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 7rem;
+  padding: 10px 5%;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
   margin: 0 auto;
   background-color: var(--navbar-bg);
   color: var(--navbar-text);
   position: sticky;
   top: 0;
   z-index: 1000;
-  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.nav-container {
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Light and Dark Themes */
@@ -24,7 +32,7 @@
 }
 
 .navbar.day {
-  --navbar-bg: #87ceeb;
+  /* --navbar-bg: #87ceeb; */
   --navbar-text: #333333;
   --nav-link-text: #333333;
   --nav-link-hover: #bfa128;
@@ -166,6 +174,9 @@
 
 
 @media (max-width: 768px) {
+  .nav-container {
+    width: 90%;
+  }
   .nav-links {
     display: none;
   }
