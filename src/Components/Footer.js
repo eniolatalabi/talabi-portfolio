@@ -1,32 +1,35 @@
-import React from 'react';
-import './Footer.css'
+import React from "react";
+import "./Footer.css";
 
-const Footer = ({ mode = 'day' }) => {
+const Footer = ({ isNightMode }) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={`contact-section ${mode}`}>
-      <div className="contact-container">
-        <div className="contact-wrapper">
-          <div>
-            <address>
-              Lagos, Nigeria
-            </address>
-            <p>
-              eniola.talabi@aol.com
-            </p>
-            <div className="section-subtitle">
-              © Eniola Talabi - MERN Stack Specialist {currentYear}
-            </div>
+    <footer className={`footer-section ${isNightMode ? "night" : "day"}`}>
+      <div className="footer-container">
+        <div className="footer-content">
+          {/* Left Section - Location */}
+          <div className="footer-location">
+            <h4 className="footer-title">Location</h4>
+            <address className="footer-address">Lagos, Nigeria</address>
           </div>
-          <div>
-            <blockquote className="section-subtitle">
-              Transforming ideas into digital experiences that inspire and innovate.
-            </blockquote>
+
+          {/* Middle Section - Principles */}
+          <div className="footer-principles">
+            <h4 className="footer-title">Principles</h4>
+            <ul className="footer-list">
+              <li>Write clean, readable code</li>
+              <li>Follow DRY (Don't Repeat Yourself)</li>
+              <li>Use meaningful variable names</li>
+              <li>Keep components modular & reusable</li>
+              <li>Optimize for performance & accessibility</li>
+            </ul>
           </div>
-          <div>
-            <h4 className="section-subtitle">SERVICES</h4>
-            <ul className="section-subtitle" style={{ listStyleType: 'none', padding: 0 }}>
+
+          {/* Right Section - Services */}
+          <div className="footer-services">
+            <h4 className="footer-title">Services</h4>
+            <ul className="footer-list">
               <li>Web Development</li>
               <li>Figma Design</li>
               <li>Frontend Development</li>
@@ -35,6 +38,10 @@ const Footer = ({ mode = 'day' }) => {
               <li>Web Design</li>
             </ul>
           </div>
+        </div>
+        {/* Copyright */}
+        <div className="footer-copy">
+          © Eniola Talabi - MERN Stack Specialist {currentYear}
         </div>
       </div>
     </footer>

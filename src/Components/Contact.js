@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
-import { FaGithub, FaLinkedin, FaTwitter, FaPaperPlane, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaPaperPlane, FaCheckCircle, FaExclamationCircle, FaMicrophone } from 'react-icons/fa';
 import './Contact.css';
 import contactImg from "../Assets/make-contact-black.png";
 
@@ -13,6 +13,71 @@ const Contact = ({ isNightMode = false, id }) => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+  const [isListening, setIsListening] = useState(false);
+  const messageRef = useRef(null);
+  const recognitionRef = useRef(null);
+  
+  // Speech recognition setup
+  const setupSpeechRecognition = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) return null;
+    
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    
+    recognition.onresult = (event) => {
+      const transcript = Array.from(event.results)
+        .map(result => result[0])
+        .map(result => result.transcript)
+        .join('');
+      
+      setFormData(prev => ({
+        ...prev,
+        message: transcript
+      }));
+    };
+    
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+    
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error', event.error);
+      setIsListening(false);
+    };
+    
+    return recognition;
+  };
+  
+  const toggleListening = () => {
+    if (!recognitionRef.current) {
+      recognitionRef.current = setupSpeechRecognition();
+      if (!recognitionRef.current) return; // Speech recognition not supported
+    }
+    
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    } else {
+      messageRef.current.focus();
+      // Store current message to prevent it from being overwritten
+      const currentMessage = formData.message;
+      
+      try {
+        recognitionRef.current.start();
+        setIsListening(true);
+      } catch (error) {
+        console.error('Speech recognition error:', error);
+        // Restart recognition if it's already running
+        recognitionRef.current.stop();
+        setTimeout(() => {
+          recognitionRef.current.start();
+          setIsListening(true);
+        }, 100);
+      }
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +89,12 @@ const Contact = ({ isNightMode = false, id }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Stop speech recognition if active
+    if (isListening && recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    }
     
     // Validate required fields
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
@@ -139,7 +210,7 @@ const Contact = ({ isNightMode = false, id }) => {
                 <label htmlFor="subject" className="form-label">Subject (Optional)</label>
               </div>
 
-              <div className="form-group">
+              <div className="form-group message-group">
                 <textarea
                   id="message"
                   name="message"
@@ -149,8 +220,31 @@ const Contact = ({ isNightMode = false, id }) => {
                   rows="5"
                   className="form-input textarea"
                   placeholder=" "
+                  ref={messageRef}
                 ></textarea>
                 <label htmlFor="message" className="form-label">Your Message</label>
+                
+                <div className="textarea-controls">
+                  <button 
+                    type="button" 
+                    onClick={toggleListening}
+                    className={`control-btn mic-btn ${isListening ? 'active' : ''} ${isNightMode ? 'night' : 'day'}`}
+                    aria-label={isListening ? "Stop dictation" : "Start dictation"}
+                    data-tooltip={isListening ? "Stop dictation" : "Start dictation"}
+                  >
+                    <FaMicrophone />
+                  </button>
+                  
+                  <button 
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`control-btn send-btn ${isNightMode ? 'night' : 'day'}`}
+                    aria-label="Send message"
+                    data-tooltip="Send message"
+                  >
+                    <FaPaperPlane />
+                  </button>
+                </div>
               </div>
 
               {submitStatus && (
@@ -160,54 +254,44 @@ const Contact = ({ isNightMode = false, id }) => {
                 </div>
               )}
 
-              <div className="form-actions">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className={`submit-btn ${isNightMode ? 'night' : 'day'}`}
-                >
-                  {isSubmitting ? 'Sending...' : (
-                    <>
-                      <FaPaperPlane className="btn-icon" /> Send Message
-                    </>
-                  )}
-                </button>
+              <div className="contact-divider">
+                <span className="divider-text">OR</span>
+              </div>
 
-                <div className="social-links-container">
-                  <div className="social-links">
-                    <a
-                      href="https://github.com/eniolatalabi"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`social-link ${isNightMode ? 'night' : 'day'}`}
-                      aria-label="GitHub Profile"
-                      title="Connect with EST via GitHub"
-                    >
-                      <FaGithub />
-                    </a>
+              <div className="social-links-container">
+                <div className="social-links">
+                  <a
+                    href="https://github.com/eniolatalabi"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`social-link ${isNightMode ? 'night' : 'day'}`}
+                    aria-label="GitHub Profile"
+                    title="Connect with EST via GitHub"
+                  >
+                    <FaGithub />
+                  </a>
 
-                    <a
-                      href="https://www.linkedin.com/in/eniola-solomon-talabi-723648271"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`social-link ${isNightMode ? 'night' : 'day'}`}
-                      aria-label="LinkedIn Profile"
-                      title="Connect with EST via LinkedIn"
-                    >
-                      <FaLinkedin />
-                    </a>
+                  <a
+                    href="https://www.linkedin.com/in/eniola-solomon-talabi-723648271"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`social-link ${isNightMode ? 'night' : 'day'}`}
+                    aria-label="LinkedIn Profile"
+                    title="Connect with EST via LinkedIn"
+                  >
+                    <FaLinkedin />
+                  </a>
 
-                    <a
-                      href="https://x.com/abgriffinn"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`social-link ${isNightMode ? 'night' : 'day'}`}
-                      aria-label="Twitter Profile"
-                      title="Connect with EST via Twitter/X"
-                    >
-                      <FaTwitter />
-                    </a>
-                  </div>
+                  <a
+                    href="https://x.com/abgriffinn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`social-link ${isNightMode ? 'night' : 'day'}`}
+                    aria-label="Twitter Profile"
+                    title="Connect with EST via Twitter/X"
+                  >
+                    <FaTwitter />
+                  </a>
                 </div>
               </div>
             </form>

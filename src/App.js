@@ -31,9 +31,9 @@ const App = () => {
         <Element name="contact">
           <Contact isNightMode={isNightMode} />
         </Element>
-        {/* <Element name="footer">
+        <Element name="footer">
           <Footer isNightMode={isNightMode} />
-        </Element> */}
+        </Element>
       </main>
     </div>
   );

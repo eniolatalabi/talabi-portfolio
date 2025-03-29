@@ -1,1 +1,92 @@
-/*  */
+.footer-section {
+    width: 100%;
+    padding: 2rem 1.5rem;
+    font-family: "Poppins", sans-serif;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  
+  .footer-section.day {
+    background: #ffffff;
+    color: #000000;
+  }
+  
+  .footer-section.night {
+    color: #ffffff;
+  }
+  
+  /* Footer Layout */
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  /* Title Styling */
+  .footer-title {
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
+    text-align: left;
+  }
+  
+  /* Left Section - Location */
+  .footer-location {
+    max-width: 300px;
+  }
+  
+  .footer-address {
+   font-family: 0.7rem;
+  }
+  
+  .footer-email {
+    font-size: 1rem;
+    margin-top: 0.3rem;
+  }
+  
+  /* Middle Section - Principles */
+  .footer-principles {
+    max-width: 400px;
+  }
+  
+  .footer-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+  }
+  
+  .footer-list li {
+    font-size: 0.9rem;
+    margin: 0.3rem 0;
+  }
+  
+  /* Right Section - Services */
+  .footer-services {
+    max-width: 300px;
+  }
+  
+  /* Copyright Positioning */
+  .footer-copy {
+    text-align: start;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Responsive Design */
+  @media (min-width: 768px) {
+    .footer-content {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      text-align: left;
+    }
+    .footer-copy {
+      text-align: start;
+    }
+  }
+  
