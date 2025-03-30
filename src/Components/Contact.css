@@ -442,3 +442,32 @@
     width: 100%;
   }
 }
+
+/* Spinner animation for send button */
+.send-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Sending state for button */
+.send-btn.sending {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.send-btn.sending.day {
+  background-color: #e69500;
+}
+
+.send-btn.sending.night {
+  background-color: #1a2f42;
+}
+
+
+.status-icon {
+  flex-shrink: 0;
+}
