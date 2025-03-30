@@ -387,9 +387,16 @@
   }
 
   .control-btn {
-    width: 46px;
-    height: 46px;
-    font-size: 1.1rem;
+    width: 35px;
+    height: 35px;
+    font-size: 0.7rem;
+  }
+  .status-icon {
+    font-size: 0.8rem;
+  }
+
+  .status-message {
+    font-size: 0.7rem;
   }
 }
 
