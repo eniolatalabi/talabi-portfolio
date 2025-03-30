@@ -1,8 +1,11 @@
 .footer-section {
-    width: 100%;
-    padding: 2rem 1.5rem;
-    font-family: "Poppins", sans-serif;
+    padding: 3rem 3.5rem; 
+    width: 100%; 
+    max-width: 1200px; 
+    margin: 0 auto;
+    box-sizing: border-box;
     transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+
   }
   
   .footer-section.day {
@@ -79,11 +82,17 @@
   
   /* Responsive Design */
   @media (min-width: 768px) {
+
     .footer-content {
       flex-direction: row;
       justify-content: space-between;
       align-items: flex-start;
       text-align: left;
+      padding: 3rem 1.5rem; 
+      width: 100%; 
+      max-width: 1200px; 
+      margin: 0 auto;
+      box-sizing: border-box;
     }
     .footer-copy {
       text-align: start;

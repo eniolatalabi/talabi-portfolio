@@ -212,7 +212,6 @@
   background: rgba(0, 0, 0, 0.9);
 }
 
-
 .react-icon { color: #61DAFB !important; }
 .node-icon { color: #68A063 !important; }
 .mongo-icon { color: #47A248 !important; }
@@ -221,11 +220,12 @@
 .css-icon { color: #1572B6 !important; }
 .vue-icon { color: #4FC08D !important; }
 .firebase-icon { color: #FFCA28 !important; }
+.next-icon { color: #515151 !important; }
+.typescript-icon { color: #3178C6 !important; }
 
 .tech-icon:hover {
   transform: scale(1.1);
 }
-
 .tech-tooltip {
   position: absolute;
   bottom: 100%;
