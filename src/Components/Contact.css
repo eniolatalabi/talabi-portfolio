@@ -386,11 +386,11 @@
     justify-content: center;
   }
 
-  /* .control-btn {
-    width: 33px;
-    height: 33px;
-    font-size: 0.9rem;
-  } */
+  .control-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
 }
 
 
