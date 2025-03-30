@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Projects.css";
 import { FaFigma, FaExternalLinkAlt } from "react-icons/fa";
 import {
@@ -108,31 +108,108 @@ const SelectedWorks = ({ isNightMode, id }) => {
 const ProjectCard = ({ project, isNightMode }) => {
   const [hovered, setHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const cardRef = useRef(null);
+  const buttonRefs = useRef([]);
 
+// Replace the existing useEffect for 3D tilt with this:
+useEffect(() => {
+  const card = cardRef.current;
+  if (!card || isMobile) return;
+
+  let isHovering = false;
+  let animationFrameId;
+
+  const handleMove = (e) => {
+    if (!isHovering) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    // Calculate rotation values (limited to 10 degrees max)
+    const rotateY = ((x - centerX) / centerX) * 10; 
+    const rotateX = ((centerY - y) / centerY) * -5; // Less intense on X axis
+    
+    // Smooth animation with requestAnimationFrame
+    const applyTransform = () => {
+      card.style.transform = `
+        perspective(1000px)
+        rotateX(${rotateX}deg)
+        rotateY(${rotateY}deg)
+        scale(1.02)
+      `;
+      card.style.transition = 'transform 0.1s linear';
+    };
+    
+    animationFrameId = requestAnimationFrame(applyTransform);
+  };
+
+  const handleEnter = () => {
+    isHovering = true;
+    card.style.willChange = 'transform'; // Optimize performance
+  };
+
+  const handleLeave = () => {
+    isHovering = false;
+    cancelAnimationFrame(animationFrameId);
+    
+    // Smooth return to neutral
+    card.style.transition = 'transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28)';
+    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+    
+    // Reset will-change after animation
+    setTimeout(() => {
+      card.style.willChange = 'auto';
+    }, 500);
+  };
+
+  card.addEventListener('mouseenter', handleEnter);
+  card.addEventListener('mousemove', handleMove);
+  card.addEventListener('mouseleave', handleLeave);
+
+  return () => {
+    cancelAnimationFrame(animationFrameId);
+    card.removeEventListener('mouseenter', handleEnter);
+    card.removeEventListener('mousemove', handleMove);
+    card.removeEventListener('mouseleave', handleLeave);
+  };
+}, [isMobile]);
+
+  // Animation 4: Magnetic Buttons
   useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+    const handleMouseMove = (e) => {
+      buttonRefs.current.forEach(button => {
+        if (!button || isMobile) return;
+        const rect = button.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        button.style.setProperty('--x', `${x - rect.width/2}px`);
+        button.style.setProperty('--y', `${y - rect.height/2}px`);
+      });
     };
-    
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
-    
+
+    const card = cardRef.current;
+    if (card) card.addEventListener('mousemove', handleMouseMove);
+
     return () => {
-      window.removeEventListener('resize', checkIfMobile);
+      if (card) card.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [isMobile]);
 
   const shouldShowDescription = isMobile || hovered;
-  const shouldShowImage = hovered;
 
   return (
     <div 
+      ref={cardRef}
       className={`card ${project.bgColor} ${isNightMode ? 'night' : 'day'}`}
       onMouseEnter={() => !isMobile && setHovered(true)}
       onMouseLeave={() => !isMobile && setHovered(false)}
       onClick={() => isMobile && setHovered(!hovered)}
     >
-      <div className={`background ${shouldShowImage ? 'hovered' : ''}`}>
+ 
+      <div className={`background ${shouldShowDescription ? 'hovered' : ''}`}>
         <img 
           className="project-image" 
           src={project.image} 
@@ -141,7 +218,7 @@ const ProjectCard = ({ project, isNightMode }) => {
       </div>
       
       <div className="content">
-        <h3 className="project-title">
+        <h3 className="project-title gradient-text">
           {project.title}
         </h3>
         <p className={`project-description ${shouldShowDescription ? 'hovered' : ''}`}>
@@ -149,13 +226,17 @@ const ProjectCard = ({ project, isNightMode }) => {
         </p>
       </div>
 
+
       <div className="stack-icons">
         {project.stack.map((tech, index) => (
           techIcons[tech] && (
             <div 
               key={index} 
               className="tech-icon"
-              style={{ transform: `translateX(${index * -5}px)` }}
+              style={{ 
+                transform: `translateX(${index * -5}px)`,
+                animationDelay: `${index * 0.1}s` // Stagger effect
+              }}
             >
               {techIcons[tech]}
               <span className="tech-tooltip">{tech}</span>
@@ -167,20 +248,22 @@ const ProjectCard = ({ project, isNightMode }) => {
       <div className="actions">
         {project.figmaLink && (
           <a 
+            ref={el => buttonRefs.current[0] = el}
             href={project.figmaLink} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="action-button figma-button"
+            className="action-button figma-button magnetic-btn"
           >
             <FaFigma />
             <span className="action-tooltip">View Design</span>
           </a>
         )}
         <a 
+          ref={el => buttonRefs.current[1] = el}
           href={project.liveLink} 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="action-button live-btn"
+          className="action-button live-btn magnetic-btn"
         >
           <FaExternalLinkAlt />
           <span className="action-tooltip">View Live</span>

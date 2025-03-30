@@ -476,3 +476,49 @@
   }
 }
 
+
+/* Animation  - Stack Icons Pop-In */
+.tech-icon {
+  opacity: 0;
+  animation: popIn 0.5s ease-out forwards;
+}
+
+@keyframes popIn {
+  0% { transform: translateY(20px) scale(0.8); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/*  Animation- Enhanced Image Zoom/Fade */
+.project-image {
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1);
+}
+
+.background.hovered .project-image {
+  transform: scale(1.1);
+  opacity: 1 !important;
+}
+
+
+
+/* Card Base Styles */
+.card {
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(0) rotateY(0);
+  transition: transform 0.5s ease-out, box-shadow 0.3s ease;
+  will-change: transform; /* Optimize performance */
+  backface-visibility: hidden; /* Prevent flickering */
+}
+
+/* Hover State */
+.card:hover {
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  z-index: 10; /* Bring forward during interaction */
+}
+
+/* Disable tilt on mobile */
+@media (max-width: 768px) {
+  .card {
+    transform: none !important;
+  }
+}

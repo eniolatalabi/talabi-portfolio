@@ -18,13 +18,14 @@ const Contact = ({ isNightMode = false, id }) => {
   const [isListening, setIsListening] = useState(false);
   const messageRef = useRef(null);
   const recognitionRef = useRef(null);
+  const finalTranscriptRef = useRef('');
   
   // Initialize EmailJS
   useEffect(() => {
     emailjs.init('mcdosV_qTGd_quZiT');
   }, []);
 
-  // Speech recognition setup
+  // Enhanced speech recognition setup with punctuation
   const setupSpeechRecognition = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
@@ -40,16 +41,49 @@ const Contact = ({ isNightMode = false, id }) => {
     recognition.interimResults = true;
     recognition.lang = 'en-US';
     
+    let timeout;
+    let lastProcessedIndex = 0;
+
     recognition.onresult = (event) => {
-      const transcript = Array.from(event.results)
-        .map(result => result[0])
-        .map(result => result.transcript)
-        .join('');
+      clearTimeout(timeout);
       
+      let interimTranscript = '';
+      let newFinalContent = false;
+
+      // Process all new results since last callback
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        
+        if (event.results[i].isFinal) {
+          const processedText = formatWithPunctuation(transcript, true);
+          finalTranscriptRef.current += (finalTranscriptRef.current ? ' ' : '') + processedText;
+          newFinalContent = true;
+          lastProcessedIndex = finalTranscriptRef.current.length;
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+
+      // Update the textarea with both final and interim results
       setFormData(prev => ({
         ...prev,
-        message: prev.message + ' ' + transcript
+        message: finalTranscriptRef.current + (interimTranscript ? ' ' + interimTranscript : '')
       }));
+
+      // Set timeout to handle speech pauses
+      timeout = setTimeout(() => {
+        if (interimTranscript) {
+          const processedText = formatWithPunctuation(interimTranscript, false);
+          finalTranscriptRef.current = finalTranscriptRef.current.substring(0, lastProcessedIndex) + 
+            (lastProcessedIndex > 0 ? ' ' : '') + processedText;
+          lastProcessedIndex = finalTranscriptRef.current.length;
+          
+          setFormData(prev => ({
+            ...prev,
+            message: finalTranscriptRef.current
+          }));
+        }
+      }, 1200); // 1.2 second pause detection
     };
     
     recognition.onend = () => {
@@ -61,24 +95,75 @@ const Contact = ({ isNightMode = false, id }) => {
       setIsListening(false);
       setSubmitStatus({ 
         success: false, 
-        message: `Speech error: ${event.error}` 
+        message: `Speech error: ${event.error === 'no-speech' ? 'No speech detected' : 'Please check microphone permissions'}` 
       });
     };
     
     return recognition;
   };
+
+  // Professional punctuation formatter
+  const formatWithPunctuation = (text, isFinal) => {
+    if (!text.trim()) return '';
+    
+    // Clean up speech artifacts
+    text = text.trim()
+      .replace(/\b(um|uh|ah|like|you know|kind of|sort of)\b/gi, '') // Remove filler words
+      .replace(/\s{2,}/g, ' '); // Collapse multiple spaces
+
+    // Capitalization rules
+    if (isFinal || text.length < 3) {
+      text = text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+    // Punctuation rules for professional communication
+    if (isFinal) {
+      const lowerText = text.toLowerCase();
+      
+      // Questions clients might ask
+      const isQuestion = /\b(can you|would you|how|what|when|where|why|who|are you|do you|is there)\b/i.test(text) || 
+                         text.endsWith(' right') || 
+                         text.endsWith(' correct') ||
+                         /\?$/.test(text);
+      
+      // Professional closings
+      const isClosing = /\b(look forward|thank you|regards|sincerely|best|cheers|kind regards)\b/i.test(text);
+      
+      // Professional openings
+      const isOpening = /\b(dear|hi|hello|greetings|good morning|good afternoon)\b/i.test(text);
+      
+      // Add appropriate punctuation
+      if (!/[.!?]$/.test(text)) {
+        if (isQuestion) {
+          text += '?';
+        } else if (isClosing) {
+          text += '.';
+        } else if (isOpening) {
+          text += ',';
+        } else if (text.length > 60) { // Longer statements get periods
+          text += '.';
+        } else if (/(and|but|however|therefore|moreover)\s/i.test(lowerText)) {
+          text += ',';
+        }
+      }
+    }
+
+    return text;
+  };
   
   const toggleListening = () => {
-    if (!recognitionRef.current) {
-      recognitionRef.current = setupSpeechRecognition();
-      if (!recognitionRef.current) return;
-    }
-    
     if (isListening) {
-      recognitionRef.current.stop();
+      recognitionRef.current?.stop();
       setIsListening(false);
+      finalTranscriptRef.current = ''; // Reset on stop
     } else {
+      if (!recognitionRef.current) {
+        recognitionRef.current = setupSpeechRecognition();
+        if (!recognitionRef.current) return;
+      }
+      
       try {
+        finalTranscriptRef.current = formData.message; // Preserve existing content
         recognitionRef.current.start();
         setIsListening(true);
         setSubmitStatus(null);
@@ -98,6 +183,10 @@ const Contact = ({ isNightMode = false, id }) => {
       ...prev,
       [name]: value
     }));
+    // Keep transcript ref in sync with manual edits
+    if (name === 'message') {
+      finalTranscriptRef.current = value;
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -165,6 +254,7 @@ const Contact = ({ isNightMode = false, id }) => {
           subject: '', 
           message: '' 
         });
+        finalTranscriptRef.current = '';
       } else {
         throw new Error('Failed to send message');
       }
@@ -263,6 +353,7 @@ const Contact = ({ isNightMode = false, id }) => {
                     disabled={isSubmitting}
                   >
                     <FaMicrophone />
+                    {isListening && <span className="listening-dot"></span>}
                   </button>
                   
                   <button 
