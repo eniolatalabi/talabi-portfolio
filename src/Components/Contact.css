@@ -134,13 +134,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border: none;
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 1rem;
+  font-size: 1.2rem;
   position: relative;
 }
 
@@ -386,11 +386,11 @@
     justify-content: center;
   }
 
-  .control-btn {
+  /* .control-btn {
     width: 33px;
     height: 33px;
     font-size: 0.9rem;
-  }
+  } */
 }
 
 
