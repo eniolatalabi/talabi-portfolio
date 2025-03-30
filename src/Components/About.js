@@ -20,19 +20,17 @@ import {
 } from "react-icons/si";
 
 const About = ({ isNightMode = true, id }) => {
-  // Calculate years of experience
   const startDate = new Date("2023-02-01");
   const currentDate = new Date();
   const monthsDiff = (currentDate - startDate) / (1000 * 60 * 60 * 24 * 30.44);
   const years = Math.floor(monthsDiff / 12);
   
-
   return (
-    <section className={`about-skillset ${isNightMode ? "night" : "day"}`}>
+    <section className={`about-skillset ${isNightMode ? "night" : "day"}`} id={id}>
       <div className="about-container">
         {/* Left Section - Profile Photo */}
         <div className="left-fixed">
-          <img src={ProfileImage} alt="Eniola Solomon Talabi" />
+          <img src={ProfileImage} alt="Eniola Solomon Talabi" className="profile-image" />
         </div>
 
         {/* Right Content Section */}
@@ -41,11 +39,11 @@ const About = ({ isNightMode = true, id }) => {
           <div className="about-text">
             <h2>About Me</h2>
             <p>
-            A masterful Full Stack Developer with over {years} years of dedicated experience, 
-            specializing in the MERN stack—MongoDB, Express, React, and Node.js. 
-            Creating digital experiences that seamlessly bridge user needs with technological possibilities.
-            Development is approached as both science and art—engineering scalable systems while crafting intuitive interfaces. 
-            Transforming concepts into robust applications that excel in scale, security, and user satisfaction.
+              A masterful Full Stack Developer with over {years} years of dedicated experience, 
+              specializing in the MERN stack—MongoDB, Express, React, and Node.js. 
+              Creating digital experiences that seamlessly bridge user needs with technological possibilities.
+              Development is approached as both science and art—engineering scalable systems while crafting intuitive interfaces. 
+              Transforming concepts into robust applications that excel in scale, security, and user satisfaction.
             </p>
           </div>
 
