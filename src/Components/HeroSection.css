@@ -391,7 +391,7 @@
   overflow: hidden;
   z-index: 1;
 }
-.cta-button.night::after {
+.cta-button.night::after, .cta-button.day::after {
   content: '';
   position: absolute;
   top: 0;
@@ -402,12 +402,10 @@
   transition: left 0.7s ease;
   z-index: -1;
 }
-.cta-button.night:hover::after {
+.cta-button.night:hover::after, .cta-button.day:hover::after {
   left: 100%;
 }
-.cta-button.day::after {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-}
+
 
 
 .social-icons a {
