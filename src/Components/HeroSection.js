@@ -1,4 +1,5 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion"; // Added for animation
 import {
   FaGithub,
   FaLinkedin,
@@ -7,10 +8,10 @@ import {
   FaGraduationCap,
   FaCode,
   FaGamepad,
-  FaBriefcase
+  FaBriefcase,
 } from "react-icons/fa";
 import "./HeroSection.css";
-import CV from "../Assets/EST CV.pdf"
+import CV from "../Assets/EST CV.pdf";
 
 const HeroSection = ({ isNightMode = true }) => {
   const [activeTab, setActiveTab] = useState("bio");
@@ -19,18 +20,12 @@ const HeroSection = ({ isNightMode = true }) => {
     setActiveTab(tab);
   };
 
-  // Calculate years of experience
   const calculateExperience = () => {
     const startDate = new Date("February 1, 2023");
     const currentDate = new Date();
-    
     let years = currentDate.getFullYear() - startDate.getFullYear();
     const months = currentDate.getMonth() - startDate.getMonth();
-    
-    if (months < 0) {
-      years--;
-    }
-    
+    if (months < 0) years--;
     return years;
   };
 
@@ -54,11 +49,7 @@ const HeroSection = ({ isNightMode = true }) => {
             </a>
           </div>
           <button className={`cta-button ${isNightMode ? "night" : "day"}`}>
-              <a 
-                href={CV}
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
+            <a href={CV} target="_blank" rel="noopener noreferrer">
               Preview Resume
             </a>
           </button>
@@ -66,59 +57,92 @@ const HeroSection = ({ isNightMode = true }) => {
 
         {/* Right Section */}
         <div className="hero-right">
-          {/* Star Animation or Sun Icon */}
-          <div className="theme-element">
-            {isNightMode ? (
-              <div className="stars-animation"></div>
-            ): ("")}
-          </div>
+          {/* Stars Animation */}
+          {isNightMode && <div className="stars-animation"></div>}
 
-          {/* Card */}
+          {/* Card with Framer Motion */}
           <div className="info-card">
-            {activeTab === "bio" && (
-              <div className="card-content">
-                <h4>Bio</h4>
-                <p>Specialization: MERN Stack</p>
-                <p>Strengths: Flexibility, Attention to Detail</p>
-                <p>Soft skills: Communication, Time Management</p>
-              </div>
-            )}
-            {activeTab === "education" && (
-              <div className="card-content">
-                <h4>Education</h4>
-                <p>Lagos State University - Business Administration</p>
-                <p>Lagos State Polytechnic - Banking and Finance</p>
-                <p>Aptech - Software Engineering</p>
-              </div>
-            )}
-            {activeTab === "skills" && (
-              <div className="card-content">
-                <h4>Skills</h4>
-                <p>Frontend: ★★★★☆</p>
-                <p>Backend: ★★★☆☆</p>
-                <p>Version Control: ★★★★☆</p>
-                <p>Other Languages: C, Java</p>
-              </div>
-            )}
-            {activeTab === "hobbies" && (
-              <div className="card-content">
-                <h4>Hobbies</h4>
-                <p>Reading: "Books are a uniquely portable magic."</p>
-                <p>Music: "Where words fail, music speaks."</p>
-                <p>Video Games: "A story you control."</p>
-              </div>
-            )}
-            {activeTab === "experience" && (
-              <div className="card-content">
-                <h4>Experience</h4>
-                <p>{calculateExperience()}+ Yrs</p>
-                <p>SAIL Innovation Lab (2023-2024)</p>
-                <p>HNG12 (2025)</p>
-              </div>
-            )}
+            <AnimatePresence mode="wait">
+              {activeTab === "bio" && (
+                <motion.div
+                  key="bio"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="card-content"
+                >
+                  <h4>Bio</h4>
+                  <p>Specialization: MERN Stack</p>
+                  <p>Strengths: Flexibility, Attention to Detail</p>
+                  <p>Soft skills: Communication, Time Management</p>
+                </motion.div>
+              )}
+              {activeTab === "education" && (
+                <motion.div
+                  key="education"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="card-content"
+                >
+                  <h4>Education</h4>
+                  <p>Lagos State University - Business Administration</p>
+                  <p>Lagos State Polytechnic - Banking and Finance</p>
+                  <p>Aptech - Software Engineering</p>
+                </motion.div>
+              )}
+              {activeTab === "skills" && (
+                <motion.div
+                  key="skills"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="card-content"
+                >
+                  <h4>Skills</h4>
+                  <p>Frontend: ★★★★☆</p>
+                  <p>Backend: ★★★☆☆</p>
+                  <p>Version Control: ★★★★☆</p>
+                  <p>Other Languages: C, Java</p>
+                </motion.div>
+              )}
+              {activeTab === "hobbies" && (
+                <motion.div
+                  key="hobbies"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="card-content"
+                >
+                  <h4>Hobbies</h4>
+                  <p>Reading: "Books are a uniquely portable magic."</p>
+                  <p>Music: "Where words fail, music speaks."</p>
+                  <p>Video Games: "A story you control."</p>
+                </motion.div>
+              )}
+              {activeTab === "experience" && (
+                <motion.div
+                  key="experience"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="card-content"
+                >
+                  <h4>Experience</h4>
+                  <p>{calculateExperience()}+ Yrs</p>
+                  <p>SAIL Innovation Lab (2023-2024)</p>
+                  <p>HNG12 (2025)</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
-          {/* Icons */}
+          {/* Icons with Bounce Animation */}
           <div className="card-icons">
             <div
               className={`icon-wrapper ${activeTab === "bio" ? "active-icon" : ""}`}

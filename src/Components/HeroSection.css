@@ -156,12 +156,12 @@
 /* Stars Animation */
 .stars-animation {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
+  top: -60px;
+  left: 10px;
+  height: 200px;
+  width: 100%;
   background-image: 
-    radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(255, 255, 255, 0)),
+    radial-gradient(1px 2px at 20px 30px, #ffffff, rgba(255, 255, 255, 0)),
     radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(255, 255, 255, 0)),
     radial-gradient(2px 2px at 60px 20px, #ffffff, rgba(255, 255, 255, 0)),
     radial-gradient(2px 2px at 80px 40px, #ffffff, rgba(255, 255, 255, 0)),
@@ -172,6 +172,8 @@
   background-repeat: repeat;
   background-size: 200px 100px;
   animation: twinkle 5s ease-in-out infinite alternate;
+  z-index: 0;
+  pointer-events: none;
 }
 
 @keyframes twinkle {
@@ -384,42 +386,47 @@
 }
   
 
+  .cta-button {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.cta-button.night::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.7s ease;
+  z-index: -1;
+}
+.cta-button.night:hover::after {
+  left: 100%;
+}
+.cta-button.day::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+}
 
-  
-  /* Floating animation */
-  /* @keyframes float {
-    0%, 100% {
-      transform: translateY(-10px);
-    }
-    50% {
-      transform: translateY(10px);
-    }
-  }
-  .background-animation {
-    position: absolute;
-    top: 10%; 
-    right: 10%;
-    width: 200px;
-    height: 200px;
-    z-index: 0;
-  }
-  
-  .background-animation .moon {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    position: absolute;
-    top: 20%;
-    right: 0%;
-    background: radial-gradient(circle at 30% 30%, #ffffff, #d6d6d6);
-    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5);
-    animation: float 3s infinite ease-in-out;
-  }
-  
-  .background-animation .sun {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #ffcc33, #ffa500);
-    animation: float 3s infinite ease-in-out;
-  } */
+
+.social-icons a {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease forwards;
+}
+.social-icons a:nth-child(1) { animation-delay: 0.2s; }
+.social-icons a:nth-child(2) { animation-delay: 0.4s; }
+.social-icons a:nth-child(3) { animation-delay: 0.6s; }
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.icon-wrapper.active-icon {
+  animation: bounce 0.5s ease;
+}
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
