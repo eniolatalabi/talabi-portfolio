@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useRef, useEffect } from "react";
 import "./Projects.css";
 import { FaFigma, FaExternalLinkAlt } from "react-icons/fa";
@@ -12,7 +13,13 @@ import {
   SiCss3,
   SiNextdotjs,
   SiTypescript,
+  SiVite,
+  SiGooglecloud,
 } from "react-icons/si";
+import { MdRestaurantMenu, MdLanguage } from "react-icons/md";
+import reconxiImg from "../Assets/reconxi.png";
+import menuswiftImg from "../Assets/menuswift.png";
+import kidshive from "../Assets/kidshive.jpg";
 
 const techIcons = {
   React: <SiReact className="react-icon" />,
@@ -25,15 +32,17 @@ const techIcons = {
   Firebase: <SiFirebase className="firebase-icon" />,
   Nextjs: <SiNextdotjs className="next-icon" />,
   Typescript: <SiTypescript className="typescript-icon" />,
+  Vite: <SiVite className="vite-icon" />,
+  "Google OAuth": <SiGooglecloud className="google-icon" />,
+  "Multi-language": <MdLanguage className="language-icon" />,
 };
 
 const projects = [
   {
     id: 1,
     title: "ReconXi",
-    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    image: reconxiImg,
     stack: ["Nextjs", "React", "Typescript", "Tailwind CSS"],
-    description: "Simplifies financial reconciliation for accountants, auditors, financial analysts, small businesses, and schools.",
     figmaLink: "https://www.figma.com/design/DIG58StAdLwxcEONbS1JAC/ReconXi?node-id=7540-18644&t=7VWB69LXgzBBq3lr-1",
     liveLink: "https://reconxi.com/",
     bgColor: "white"
@@ -41,7 +50,7 @@ const projects = [
   {
     id: 2,
     title: "Kidshive",
-    image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    image: kidshive,
     stack: ["React", "Node.js", "MongoDB", "Ant Design", "Tailwind CSS"],
     description: "A kid-friendly LMS teaching programming with interactive courses.",
     figmaLink: "https://www.figma.com/kidshive",
@@ -60,11 +69,12 @@ const projects = [
   },
   {
     id: 4,
-    title: "TravelSmart",
-    image: "https://images.unsplash.com/photo-1508672019048-805c876b67e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-    stack: ["React", "Tailwind CSS"],
-    description: "Travel advice platform with community blogs and insights.",
-    liveLink: "https://travelsmart-rho.vercel.app/",
+    title: "MenuSwift",
+    image: menuswiftImg,
+    stack: ["React", "Vite", "Typescript", "Google OAuth"],
+    description: "Modern restaurant management system with QR menu generation, order processing, and multi-language support for seamless dining experiences.",
+      figmaLink: "https://www.figma.com/design/wbk77jTVE8weNTkO9so4bm/PROJECT-MENUCARD-APP---DESIGN?node-id=5907-14152&t=Uv4uEjO7fEJNdGSt-1",
+    liveLink: "https://visit.menu/",
     bgColor: "black"
   },
   {
@@ -111,7 +121,7 @@ const ProjectCard = ({ project, isNightMode }) => {
   const cardRef = useRef(null);
   const buttonRefs = useRef([]);
 
-// Replace the existing useEffect for 3D tilt with this:
+// useEffect for 3D tilt with this:
 useEffect(() => {
   const card = cardRef.current;
   if (!card || isMobile) return;

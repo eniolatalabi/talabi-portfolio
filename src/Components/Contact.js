@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useRef, useEffect } from 'react';
-import emailjs from '@emailjs/browser';
 import { FaGithub, FaLinkedin, FaTwitter, FaPaperPlane, FaCheckCircle, FaExclamationCircle, FaMicrophone } from 'react-icons/fa';
 import { ImSpinner8 } from 'react-icons/im';
 import './Contact.css';
@@ -19,11 +19,6 @@ const Contact = ({ isNightMode = false, id }) => {
   const messageRef = useRef(null);
   const recognitionRef = useRef(null);
   const finalTranscriptRef = useRef('');
-  
-  // Initialize EmailJS
-  useEffect(() => {
-    emailjs.init('mcdosV_qTGd_quZiT');
-  }, []);
 
   // Enhanced speech recognition setup with punctuation
   const setupSpeechRecognition = () => {
@@ -220,34 +215,30 @@ const Contact = ({ isNightMode = false, id }) => {
     setSubmitStatus(null);
 
     try {
-      const timeString = new Date().toLocaleString('en-US', {
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+      // Create mailto URL with form data
+      const subject = formData.subject.trim() || `Message from ${formData.from_name.trim()}`;
+      const body = `Hi Eniola,
+
+${formData.message.trim()}
+
+---
+Best regards,
+${formData.from_name.trim()}
+${formData.from_email.trim()}`;
+
+      const mailtoUrl = `mailto:talabi.eniola.s@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      // Open mailto link
+      window.location.href = mailtoUrl;
+      
+      // Show success message
+      setSubmitStatus({ 
+        success: true, 
+        message: 'Email client opened successfully! Please send the email from your email app.' 
       });
-
-      const templateParams = {
-        from_name: formData.from_name.trim(),
-        from_email: formData.from_email.trim(),
-        subject: formData.subject.trim() || 'No subject provided',
-        message: formData.message.trim(),
-        time: timeString,
-        year: new Date().getFullYear().toString()
-      };
-
-      const response = await emailjs.send(
-        'service_lk5zbom',
-        'template_ykwh82r',
-        templateParams
-      );
-
-      if (response.status === 200) {
-        setSubmitStatus({ 
-          success: true, 
-          message: 'Message sent successfully! I will respond soon.' 
-        });
+      
+      // Clear form after a delay
+      setTimeout(() => {
         setFormData({ 
           from_name: '', 
           from_email: '', 
@@ -255,14 +246,14 @@ const Contact = ({ isNightMode = false, id }) => {
           message: '' 
         });
         finalTranscriptRef.current = '';
-      } else {
-        throw new Error('Failed to send message');
-      }
+        setSubmitStatus(null);
+      }, 3000);
+      
     } catch (error) {
-      console.error('EmailJS error:', error);
+      console.error('Mailto error:', error);
       setSubmitStatus({ 
         success: false, 
-        message: error.text || 'Failed to send message. Please try again or contact me directly at eniola@example.com' 
+        message: 'Unable to open email client. Please contact me directly at talabi.eniola.s@gmail.com' 
       });
     } finally {
       setIsSubmitting(false);
@@ -360,8 +351,8 @@ const Contact = ({ isNightMode = false, id }) => {
                     type="submit"
                     disabled={isSubmitting}
                     className={`control-btn send-btn ${isNightMode ? 'night' : 'day'} ${isSubmitting ? 'sending' : ''}`}
-                    aria-label={isSubmitting ? "Sending message" : "Send message"}
-                    data-tooltip={isSubmitting ? "Sending..." : "Send message"}
+                    aria-label={isSubmitting ? "Opening email client" : "Send via email"}
+                    data-tooltip={isSubmitting ? "Opening..." : "Send via email"}
                   >
                     {isSubmitting ? (
                       <ImSpinner8 className="send-spinner" />
@@ -417,6 +408,16 @@ const Contact = ({ isNightMode = false, id }) => {
                     aria-label="Twitter Profile"
                   >
                     <FaTwitter />
+                  </a>
+                </div>
+
+                <div className="direct-email">
+                  <p className="email-text">Or email me directly:</p>
+                  <a 
+                    href="mailto:talabi.eniola.s@gmail.com"
+                    className={`email-link ${isNightMode ? 'night' : 'day'}`}
+                  >
+                    talabi.eniola.s@gmail.com
                   </a>
                 </div>
               </div>
