@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useRef, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 import { FaGithub, FaLinkedin, FaTwitter, FaPaperPlane, FaCheckCircle, FaExclamationCircle, FaMicrophone } from 'react-icons/fa';
 import { ImSpinner8 } from 'react-icons/im';
 import './Contact.css';
@@ -8,7 +8,7 @@ import contactImg from "../Assets/make-contact-black.png";
 const Contact = ({ isNightMode = false, id }) => {
   const formRef = useRef(null);
   const [formData, setFormData] = useState({
-    from_name: '',
+    name: '',
     from_email: '',
     subject: '',
     message: ''
@@ -19,6 +19,21 @@ const Contact = ({ isNightMode = false, id }) => {
   const messageRef = useRef(null);
   const recognitionRef = useRef(null);
   const finalTranscriptRef = useRef('');
+  
+  // Initialize EmailJS with proper error handling
+  useEffect(() => {
+    try {
+      // Try with your public key first
+      emailjs.init('ctPSm0FKKukvAsYQB');
+      console.log('EmailJS initialized successfully');
+    } catch (error) {
+      console.error('EmailJS initialization error:', error);
+      setSubmitStatus({ 
+        success: false, 
+        message: 'Email service initialization failed' 
+      });
+    }
+  }, []);
 
   // Enhanced speech recognition setup with punctuation
   const setupSpeechRecognition = () => {
@@ -194,7 +209,7 @@ const Contact = ({ isNightMode = false, id }) => {
     }
     
     // Validate required fields
-    if (!formData.from_name.trim() || !formData.from_email.trim() || !formData.message.trim()) {
+    if (!formData.name.trim() || !formData.from_email.trim() || !formData.message.trim()) {
       setSubmitStatus({ 
         success: false, 
         message: 'Please fill all required fields' 
@@ -215,45 +230,70 @@ const Contact = ({ isNightMode = false, id }) => {
     setSubmitStatus(null);
 
     try {
-      // Create mailto URL with form data
-      const subject = formData.subject.trim() || `Message from ${formData.from_name.trim()}`;
-      const body = `Hi Eniola,
-
-${formData.message.trim()}
-
----
-Best regards,
-${formData.from_name.trim()}
-${formData.from_email.trim()}`;
-
-      const mailtoUrl = `mailto:talabi.eniola.s@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      
-      // Open mailto link
-      window.location.href = mailtoUrl;
-      
-      // Show success message
-      setSubmitStatus({ 
-        success: true, 
-        message: 'Email client opened successfully! Please send the email from your email app.' 
+      const timeString = new Date().toLocaleString('en-US', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
       });
-      
-      // Clear form after a delay
-      setTimeout(() => {
+
+      // Template parameters that match your EmailJS template
+      const templateParams = {
+        from_name: formData.name.trim(), // Changed from 'name' to 'from_name'
+        from_email: formData.from_email.trim(),
+        subject: formData.subject.trim() || 'New Contact Form Message',
+        message: formData.message.trim(),
+        to_name: 'Eniola', // Your name
+        reply_to: formData.from_email.trim(),
+        time: timeString
+      };
+
+      console.log('Sending email with params:', templateParams);
+      console.log('Service ID:', 'service_gn5yeql');
+      console.log('Template ID:', 'template_v4n0hc9');
+
+      const response = await emailjs.send(
+        'service_gn5yeql',
+        'template_v4n0hc9',
+        templateParams
+      );
+
+      console.log('EmailJS response:', response);
+
+      if (response.status === 200) {
+        setSubmitStatus({ 
+          success: true, 
+          message: 'Message sent successfully! I will respond soon.' 
+        });
         setFormData({ 
-          from_name: '', 
+          name: '', 
           from_email: '', 
           subject: '', 
           message: '' 
         });
         finalTranscriptRef.current = '';
-        setSubmitStatus(null);
-      }, 3000);
-      
+      } else {
+        throw new Error(`EmailJS returned status: ${response.status}`);
+      }
     } catch (error) {
-      console.error('Mailto error:', error);
+      console.error('EmailJS error details:', error);
+      console.error('Error message:', error.message);
+      console.error('Error text:', error.text);
+      
+      let errorMessage = 'Failed to send message. ';
+      
+      if (error.text) {
+        errorMessage += error.text;
+      } else if (error.message) {
+        errorMessage += error.message;
+      } else {
+        errorMessage += 'Please try again or contact me directly.';
+      }
+      
       setSubmitStatus({ 
         success: false, 
-        message: 'Unable to open email client. Please contact me directly at talabi.eniola.s@gmail.com' 
+        message: errorMessage
       });
     } finally {
       setIsSubmitting(false);
@@ -282,15 +322,15 @@ ${formData.from_email.trim()}`;
               <div className="form-group">
                 <input
                   type="text"
-                  id="from_name"
-                  name="from_name"
-                  value={formData.from_name}
+                  id="name"
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
                   required
                   className="form-input"
                   placeholder=" "
                 />
-                <label htmlFor="from_name" className="form-label">Full Name</label>
+                <label htmlFor="name" className="form-label">Full Name</label>
               </div>
 
               <div className="form-group">
@@ -351,8 +391,8 @@ ${formData.from_email.trim()}`;
                     type="submit"
                     disabled={isSubmitting}
                     className={`control-btn send-btn ${isNightMode ? 'night' : 'day'} ${isSubmitting ? 'sending' : ''}`}
-                    aria-label={isSubmitting ? "Opening email client" : "Send via email"}
-                    data-tooltip={isSubmitting ? "Opening..." : "Send via email"}
+                    aria-label={isSubmitting ? "Sending message" : "Send message"}
+                    data-tooltip={isSubmitting ? "Sending..." : "Send message"}
                   >
                     {isSubmitting ? (
                       <ImSpinner8 className="send-spinner" />
@@ -410,16 +450,6 @@ ${formData.from_email.trim()}`;
                     <FaTwitter />
                   </a>
                 </div>
-{/* 
-                <div className="direct-email">
-                  <p className="email-text">Or email me directly:</p>
-                  <a 
-                    href="mailto:talabi.eniola.s@gmail.com"
-                    className={`email-link ${isNightMode ? 'night' : 'day'}`}
-                  >
-                    talabi.eniola.s@gmail.com
-                  </a>
-                </div> */}
               </div>
             </form>
           </div>
