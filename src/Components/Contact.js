@@ -410,7 +410,7 @@ ${formData.from_email.trim()}`;
                     <FaTwitter />
                   </a>
                 </div>
-
+{/* 
                 <div className="direct-email">
                   <p className="email-text">Or email me directly:</p>
                   <a 
@@ -419,7 +419,7 @@ ${formData.from_email.trim()}`;
                   >
                     talabi.eniola.s@gmail.com
                   </a>
-                </div>
+                </div> */}
               </div>
             </form>
           </div>
