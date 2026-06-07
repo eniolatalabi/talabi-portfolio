@@ -99,6 +99,13 @@ const Contact = ({ isNightMode = false, id }) => {
     <section id="contact" className={`contact-section ${isNightMode ? "night" : "day"}`}>
       <div className="contact-container">
         <div className="contact-wrapper">
+          <div className="contact-image">
+            <img
+              src="/make-contact-black.png"
+              alt="Contact illustration"
+              className={`contact-img ${isNightMode ? "night" : "day"}`}
+            />
+          </div>
           <div className="contact-form-container">
             <h2 className="section-title">Make Contact</h2>
             <p className="section-subtitle">

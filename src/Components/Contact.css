@@ -17,9 +17,9 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;  
+  gap: 3rem;
   align-items: center;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -552,4 +552,28 @@
 .contact-form-container {
   width: 100%;
   max-width: 640px;
+}
+
+/* Theme-reactive illustration, original treatment restored */
+.contact-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.contact-img {
+  max-width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  transition: filter 0.3s ease;
+}
+.contact-img.day { filter: invert(1); }
+
+@media (max-width: 900px) {
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .contact-img { max-height: 240px; }
 }

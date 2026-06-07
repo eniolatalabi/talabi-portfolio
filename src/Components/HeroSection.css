@@ -138,7 +138,7 @@
   max-width: 580px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   position: relative;
   
@@ -179,13 +179,15 @@
 
 /* Card */
 .info-card {
-  width: 350px;
-  height: 300px;
+  width: 100%;
+  max-width: 470px;
+  height: auto;
+  min-height: 360px;
   position: relative;
   z-index: 1;
   background: #000000;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -209,7 +211,7 @@
 
 .info-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
 }
 
 .card-content {
@@ -240,6 +242,7 @@
   justify-content: center;
   gap: 1rem;
   width: 100%;
+  max-width: 470px;
   z-index: 1;
 }
 
@@ -424,3 +427,13 @@
   margin: 0 0 1.8rem;
 }
 .hero-left h3 { margin-bottom: 1rem; }
+
+/* Card fills column height on desktop, natural height stacked */
+@media (max-width: 992px) {
+  .hero-right { align-items: center; }
+  .info-card {
+    flex: none;
+    height: auto;
+    min-height: 280px;
+  }
+}
