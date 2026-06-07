@@ -18,3 +18,6 @@ body {
 .app.day {
   background-color: #ffffff;
 }
+
+/* Anchors never default to underlined blue */
+a { color: inherit; text-decoration: none; }

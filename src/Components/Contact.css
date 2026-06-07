@@ -543,3 +543,13 @@
   }
 }
 
+
+/* Illustration removed: center the form */
+.contact-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.contact-form-container {
+  width: 100%;
+  max-width: 640px;
+}

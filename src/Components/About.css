@@ -271,3 +271,11 @@
   }
 
   
+/* Photo removed: center the content column */
+.about-container .right-content {
+  max-width: 920px;
+  margin: 0 auto;
+}
+.icon.fastapi { color: #009688; }
+.icon.next { color: currentColor; }
+.icon.typescript { color: #3178c6; }

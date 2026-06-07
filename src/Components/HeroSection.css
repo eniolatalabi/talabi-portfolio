@@ -27,8 +27,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 6rem;
+  gap: 2.5rem;
+  padding: 1rem 5%;
   width: 100%;
+  max-width: 1260px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -36,9 +38,9 @@
 
 /* Left Section */
 .hero-left {
-  flex: 1;
-  padding: 2rem;
-  max-width: 600px;
+  flex: 1 1 0;
+  padding: 2rem 0;
+  max-width: 580px;
 }
 
 .hero-left h4 {
@@ -91,6 +93,9 @@
 
 /* CTA Button */
 .cta-button {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
   padding: 1rem 2rem;
   border: none;
   border-radius: 8px;
@@ -129,13 +134,14 @@
 
 /* Right Section */
 .hero-right {
-  flex: 1;
+  flex: 1 1 0;
+  max-width: 580px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  max-width: 500px;
+  
 }
 
 /* Theme Elements */
@@ -154,27 +160,7 @@
 
 
 /* Stars Animation */
-.stars-animation {
-  position: absolute;
-  top: -60px;
-  left: 10px;
-  height: 200px;
-  width: 100%;
-  background-image: 
-    radial-gradient(1px 2px at 20px 30px, #ffffff, rgba(255, 255, 255, 0)),
-    radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(255, 255, 255, 0)),
-    radial-gradient(2px 2px at 60px 20px, #ffffff, rgba(255, 255, 255, 0)),
-    radial-gradient(2px 2px at 80px 40px, #ffffff, rgba(255, 255, 255, 0)),
-    radial-gradient(2px 2px at 100px 60px, #ffffff, rgba(255, 255, 255, 0)),
-    radial-gradient(2px 2px at 120px 10px, #ffffff, rgba(255, 255, 255, 0)),
-    radial-gradient(2px 2px at 140px 30px, #ffffff, rgba(255, 255, 255, 0)),
-    radial-gradient(2px 2px at 160px 50px, #ffffff, rgba(255, 255, 255, 0));
-  background-repeat: repeat;
-  background-size: 200px 100px;
-  animation: twinkle 5s ease-in-out infinite alternate;
-  z-index: 0;
-  pointer-events: none;
-}
+
 
 @keyframes twinkle {
   0% {
@@ -428,3 +414,13 @@
   50% { transform: scale(1.2); }
 }
 
+
+/* Hero intro line under the title */
+.hero-left .hero-intro {
+  max-width: 480px;
+  font-size: 1rem;
+  line-height: 1.65;
+  opacity: 0.85;
+  margin: 0 0 1.8rem;
+}
+.hero-left h3 { margin-bottom: 1rem; }
