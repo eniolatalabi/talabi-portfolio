@@ -1,110 +1,86 @@
+import React, { useState, useEffect } from "react";
+import { Link as ScrollLink } from "react-scroll";
+import { FiSun, FiMoon, FiMenu, FiX } from "react-icons/fi";
+import "./NavBar.css";
 
-
-import React, { useState } from 'react';
-import { Link as ScrollLink } from 'react-scroll';
-import { FaBars, FaTimes } from 'react-icons/fa';
-import './NavBar.css';
+const LINKS = [
+  { to: "about", label: "About" },
+  { to: "projects", label: "Work" },
+  { to: "contact", label: "Contact" },
+];
 
 const NavBar = ({ onThemeToggle }) => {
   const [isNightMode, setIsNightMode] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const toggleTheme = () => {
-    const newTheme = !isNightMode;
-    setIsNightMode(newTheme);
-    document.body.classList.toggle('dark-mode', newTheme);
-    onThemeToggle(newTheme);
+    const next = !isNightMode;
+    setIsNightMode(next);
+    onThemeToggle(next);
   };
 
-  const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
-  };
-
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
+  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <nav className={`navbar ${isNightMode ? 'night' : 'day'}`}>
-      <div className='nav-container'>
-
-      <div className="logo">
-        <ScrollLink 
-          to="home" 
-          smooth={true} 
-          duration={500} 
-          offset={-70} // Adjust offset if you have a fixed header
+    <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
+      <div className="nav-inner">
+        <ScrollLink
+          to="home"
+          smooth={true}
+          duration={500}
+          offset={-80}
+          className="nav-mark"
           onClick={closeMenu}
         >
-          <span className="logo-text">EST<span className="logo-dot">.</span></span>
+          EST<span className="nav-dot">.</span>
         </ScrollLink>
-      </div>
 
-      <div className="menu-toggle" onClick={toggleMenu}>
-        {menuOpen ? <FaTimes /> : <FaBars />}
-      </div>
+        <div className="nav-right">
+          <ul className="nav-links">
+            {LINKS.map((link) => (
+              <li key={link.to}>
+                <ScrollLink to={link.to} smooth={true} duration={500} offset={-80}>
+                  {link.label}
+                </ScrollLink>
+              </li>
+            ))}
+          </ul>
 
-      <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
-        <li>
-          <ScrollLink 
-            to="about" 
-            smooth={true} 
-            duration={500} 
-            offset={-70} 
-            onClick={closeMenu}
+          <button
+            className="nav-theme"
+            onClick={toggleTheme}
+            aria-label={isNightMode ? "Switch to light mode" : "Switch to dark mode"}
           >
-            About
-          </ScrollLink>
-        </li>
-        <li>
-          <ScrollLink 
-            to="projects" 
-            smooth={true} 
-            duration={500} 
-            offset={-70} 
-            onClick={closeMenu}
-          >
-            Projects
-          </ScrollLink>
-        </li>
-        <li>
-          <ScrollLink 
-            to="contact" 
-            smooth={true} 
-            duration={500} 
-            offset={-70} 
-            onClick={closeMenu}
-          >
-            Contact
-          </ScrollLink>
-        </li>
-        {menuOpen && (
-          <li className="theme-toggle-mobile">
-            <div
-              className={`toggle-container ${isNightMode ? 'night' : 'day'}`}
-              onClick={() => {
-                toggleTheme();
-                closeMenu();
-              }}
-            >
-              <div className={`toggle-switch ${isNightMode ? 'night' : 'day'}`}>
-                {isNightMode ? 'NIGHT' : 'DAY'}
-              </div>
-            </div>
-          </li>
-        )}
-      </ul>
+            {isNightMode ? <FiSun /> : <FiMoon />}
+          </button>
 
-      <div className="theme-toggle">
-        <div
-          className={`toggle-container ${isNightMode ? 'night' : 'day'}`}
-          onClick={toggleTheme}
-        >
-          <div className={`toggle-switch ${isNightMode ? 'night' : 'day'}`}>
-            {isNightMode ? 'NIGHT' : 'DAY'}
-          </div>
+          <button
+            className="nav-burger"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+          >
+            {menuOpen ? <FiX /> : <FiMenu />}
+          </button>
         </div>
       </div>
+
+      <div className={`nav-overlay ${menuOpen ? "open" : ""}`}>
+        <ul>
+          {LINKS.map((link) => (
+            <li key={link.to}>
+              <ScrollLink to={link.to} smooth={true} duration={500} offset={-80} onClick={closeMenu}>
+                {link.label}
+              </ScrollLink>
+            </li>
+          ))}
+        </ul>
       </div>
     </nav>
   );

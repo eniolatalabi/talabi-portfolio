@@ -1,119 +1,44 @@
-.footer-section {
-    padding: 3rem 2rem; 
-    width: 100%; 
-    max-width: 760px; 
-    margin: 0 auto;
-    box-sizing: border-box;
-    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-
-  }
-  
-  .footer-section.day {
-    background: #ffffff;
-    color: #000000;
-  }
-  
-  .footer-section.night {
-    color: #ffffff;
-  }
-  
-  /* Footer Layout */
-  .footer-container {
-    max-width: 760px;
-    margin: 0 auto;
-  }
-  
-  .footer-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  
-  /* Title Styling */
-  .footer-title {
-    font-size: 1rem;
-    padding-bottom: 0.5rem;
-    text-align: left;
-  }
-  
-  /* Left Section - Location */
-  .footer-location {
-    max-width: 300px;
-  }
-  
-  .footer-address {
-   font-family: 0.7rem;
-  }
-  
-  .footer-email {
-    font-size: 1rem;
-    margin-top: 0.3rem;
-  }
-  
-  /* Middle Section - Principles */
-  .footer-principles {
-    max-width: 400px;
-  }
-  
-  .footer-list {
-    list-style: none;
-    padding: 0;
-    text-align: left;
-  }
-  
-  .footer-list li {
-    font-size: 0.9rem;
-    margin: 0.3rem 0;
-  }
-  
-  /* Right Section - Services */
-  .footer-services {
-    max-width: 300px;
-  }
-  
-  /* Copyright Positioning */
-  .footer-copy {
-    text-align: start;
-    font-size: 0.8rem;
-    opacity: 0.8;
-    padding-top: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  /* Responsive Design */
-  @media (min-width: 768px) {
-
-    .footer-content {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-start;
-      text-align: left;
-      padding: 3rem 1.5rem; 
-      width: 100%; 
-      max-width: 1200px; 
-      margin: 0 auto;
-      box-sizing: border-box;
-    }
-    .footer-copy {
-      text-align: start;
-    }
-  }
-  
-/* Rewritten footer: links inherit theme, icons aligned */
-.footer-list a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  color: inherit;
-  text-decoration: none;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 0;
 }
-.footer-list a:hover { opacity: 0.7; }
-.footer-list li { cursor: default; }
-.footer-identity,
-.footer-nav,
-.footer-elsewhere {
-  flex: 1;
-  min-width: 160px;
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+.footer-mark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--text);
+}
+.footer-dot { color: var(--accent); }
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+.footer-links {
+  display: flex;
+  gap: 1.6rem;
+}
+.footer-links a {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+.footer-links a:hover { color: var(--text); }
+
+@media (max-width: 560px) {
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
 }

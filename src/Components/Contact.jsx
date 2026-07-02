@@ -1,67 +1,50 @@
 import React, { useState } from "react";
-import {
-  FaGithub,
-  FaLinkedin,
-  FaPaperPlane,
-  FaCheckCircle,
-  FaExclamationCircle,
-  FaEnvelope,
-} from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FiArrowUpRight } from "react-icons/fi";
 import { ImSpinner8 } from "react-icons/im";
 import "./Contact.css";
 
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 const CONTACT_EMAIL = "talabi.eniola.s@gmail.com";
-
-const emptyForm = { name: "", email: "", subject: "", message: "" };
+const emptyForm = { name: "", email: "", message: "" };
 
 const validateForm = (form) => {
   if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
-    return "Please fill all required fields";
+    return "Please fill all fields.";
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-    return "Please enter a valid email address";
+    return "Please enter a valid email address.";
   }
   return null;
 };
 
-const Contact = ({ isNightMode = false, id }) => {
+const Contact = () => {
   const [formData, setFormData] = useState(emptyForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const [status, setStatus] = useState(null);
 
   const accessKey = import.meta.env.VITE_WEB3FORMS_KEY;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData((previous) => ({ ...previous, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const validationError = validateForm(formData);
-    if (validationError) {
-      setSubmitStatus({ success: false, message: validationError });
+    const error = validateForm(formData);
+    if (error) {
+      setStatus({ success: false, message: error });
       return;
     }
     if (!accessKey) {
-      setSubmitStatus({
-        success: false,
-        message: `The form is not configured yet. Email me directly at ${CONTACT_EMAIL}.`,
-      });
+      setStatus({ success: false, message: `Form not configured. Email me at ${CONTACT_EMAIL}.` });
       return;
     }
-
-    // The hidden botcheck field is a honeypot: humans never fill it,
-    // bots usually do, and Web3Forms drops those submissions.
-    if (event.target.botcheck && event.target.botcheck.value) {
-      return;
-    }
+    if (event.target.botcheck && event.target.botcheck.value) return;
 
     setIsSubmitting(true);
-    setSubmitStatus(null);
-
+    setStatus(null);
     try {
       const response = await fetch(WEB3FORMS_ENDPOINT, {
         method: "POST",
@@ -70,165 +53,76 @@ const Contact = ({ isNightMode = false, id }) => {
           access_key: accessKey,
           name: formData.name.trim(),
           email: formData.email.trim(),
-          subject: formData.subject.trim() || "New message from talabiverse",
+          subject: "New message from talabiverse",
           message: formData.message.trim(),
         }),
       });
       const result = await response.json();
-
       if (result.success) {
-        setSubmitStatus({
-          success: true,
-          message: "Message sent. I will respond soon.",
-        });
+        setStatus({ success: true, message: "Message sent. I will respond soon." });
         setFormData(emptyForm);
       } else {
         throw new Error(result.message || "Submission failed");
       }
-    } catch (error) {
-      setSubmitStatus({
-        success: false,
-        message: `Could not send the message. Email me directly at ${CONTACT_EMAIL}.`,
-      });
+    } catch (err) {
+      setStatus({ success: false, message: `Could not send. Email me at ${CONTACT_EMAIL}.` });
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <section id="contact" className={`contact-section ${isNightMode ? "night" : "day"}`}>
-      <div className="contact-container">
-        <div className="contact-wrapper">
-          <div className="contact-image">
-            <img
-              src="/make-contact-black.png"
-              alt="Contact illustration"
-              className={`contact-img ${isNightMode ? "night" : "day"}`}
-            />
-          </div>
-          <div className="contact-form-container">
-            <h2 className="section-title">Make Contact</h2>
-            <p className="section-subtitle">
-              Have a project in mind or want to discuss opportunities?
-              <br /> Reach out and let's connect.
+    <section className="contact">
+      <div className="contact-inner section-inner">
+        <p className="eyebrow">Contact</p>
+
+        <div className="contact-grid">
+          <div className="contact-lead">
+            <h2 className="contact-head">Let us build something.</h2>
+            <p className="contact-sub">
+              Have a project in mind or a role to discuss? Reach out directly or
+              send a message.
             </p>
-
-            <form onSubmit={handleSubmit} className="contact-form">
-              <input type="checkbox" name="botcheck" tabIndex="-1" style={{ display: "none" }} />
-
-              <div className="form-group">
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                  placeholder=" "
-                />
-                <label htmlFor="name" className="form-label">Full Name</label>
-              </div>
-
-              <div className="form-group">
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                  placeholder=" "
-                />
-                <label htmlFor="email" className="form-label">Email Address</label>
-              </div>
-
-              <div className="form-group">
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className="form-input"
-                  placeholder=" "
-                />
-                <label htmlFor="subject" className="form-label">Subject (Optional)</label>
-              </div>
-
-              <div className="form-group message-group">
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows="5"
-                  className="form-input textarea"
-                  placeholder=" "
-                ></textarea>
-                <label htmlFor="message" className="form-label">Your Message</label>
-
-                <div className="textarea-controls">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={`control-btn send-btn ${isNightMode ? "night" : "day"} ${isSubmitting ? "sending" : ""}`}
-                    aria-label={isSubmitting ? "Sending message" : "Send message"}
-                    data-tooltip={isSubmitting ? "Sending..." : "Send message"}
-                  >
-                    {isSubmitting ? <ImSpinner8 className="send-spinner" /> : <FaPaperPlane />}
-                  </button>
-                </div>
-              </div>
-
-              {submitStatus && (
-                <div className={`status-message ${submitStatus.success ? "success" : "error"}`}>
-                  {submitStatus.success ? (
-                    <FaCheckCircle className="status-icon" />
-                  ) : (
-                    <FaExclamationCircle className="status-icon" />
-                  )}
-                  <span>{submitStatus.message}</span>
-                </div>
-              )}
-
-              <div className="contact-divider">
-                <span className="divider-text">OR</span>
-              </div>
-
-              <div className="social-links-container">
-                <div className="social-links">
-                  <a
-                    href={`mailto:${CONTACT_EMAIL}`}
-                    className={`social-link ${isNightMode ? "night" : "day"}`}
-                    aria-label="Email"
-                  >
-                    <FaEnvelope />
-                  </a>
-                  <a
-                    href="https://github.com/eniolatalabi"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`social-link ${isNightMode ? "night" : "day"}`}
-                    aria-label="GitHub Profile"
-                  >
-                    <FaGithub />
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/eniolasolomontalabi"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`social-link ${isNightMode ? "night" : "day"}`}
-                    aria-label="LinkedIn Profile"
-                  >
-                    <FaLinkedin />
-                  </a>
-                </div>
-              </div>
-            </form>
+            <a className="contact-email" href={`mailto:${CONTACT_EMAIL}`}>
+              {CONTACT_EMAIL} <FiArrowUpRight />
+            </a>
+            <div className="contact-socials">
+              <a href="https://github.com/eniolatalabi" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <FaGithub />
+              </a>
+              <a href="https://www.linkedin.com/in/eniolasolomontalabi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <FaLinkedin />
+              </a>
+            </div>
           </div>
+
+          <form onSubmit={handleSubmit} className="contact-form">
+            <input type="checkbox" name="botcheck" tabIndex="-1" style={{ display: "none" }} />
+
+            <div className="field">
+              <label htmlFor="name">Name</label>
+              <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
+            </div>
+
+            <div className="field">
+              <label htmlFor="email">Email</label>
+              <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
+            </div>
+
+            <div className="field">
+              <label htmlFor="message">Message</label>
+              <textarea id="message" name="message" rows="4" value={formData.message} onChange={handleChange} required />
+            </div>
+
+            <button type="submit" className="contact-send" disabled={isSubmitting}>
+              {isSubmitting ? <ImSpinner8 className="spin" /> : null}
+              {isSubmitting ? "Sending" : "Send message"}
+            </button>
+
+            {status && (
+              <p className={`contact-status ${status.success ? "ok" : "err"}`}>{status.message}</p>
+            )}
+          </form>
         </div>
       </div>
     </section>
