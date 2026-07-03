@@ -2,7 +2,10 @@ import React from "react";
 import "./About.css";
 
 const SKILLS = [
-  { label: "Frontend", value: "React, Next.js, React Native, TypeScript, Tailwind CSS" },
+  {
+    label: "Frontend",
+    value: "React, Next.js, React Native, TypeScript, Tailwind CSS",
+  },
   { label: "Backend", value: "FastAPI, Node.js, Express, REST, JWT" },
   { label: "Data", value: "PostgreSQL, MongoDB, Supabase" },
   { label: "Applied ML", value: "Python, scikit-learn" },
@@ -24,7 +27,7 @@ const About = () => {
               flagship API runs 42 tests at 95% coverage, gated in CI, live on
               Render.
             </p>
-            <p>Currently building client products as a freelance engineer.</p>
+            <p>Building production web and mobile applications.</p>
           </div>
 
           <div className="about-skills">
