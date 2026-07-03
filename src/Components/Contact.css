@@ -63,17 +63,22 @@
 .field textarea {
   font-family: var(--font-body);
   font-size: 0.98rem;
+  line-height: 1.5;
   color: var(--text);
   background: transparent;
   border: none;
   border-bottom: 1px solid var(--border-2);
-  padding: 0.6rem 0;
+  padding: 0.35rem 0 0.4rem;
   transition: border-color 0.2s ease;
-  resize: vertical;
 }
 .field input:focus,
 .field textarea:focus { outline: none; border-bottom-color: var(--accent); }
-.field textarea { min-height: 90px; }
+.field textarea {
+  resize: none;
+  overflow: hidden;
+  min-height: 1.6rem;
+  display: block;
+}
 
 .contact-send {
   align-self: flex-start;

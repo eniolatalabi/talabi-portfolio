@@ -20,6 +20,11 @@ const NavBar = ({ onThemeToggle }) => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
   const toggleTheme = () => {
     const next = !isNightMode;
     setIsNightMode(next);
@@ -29,7 +34,7 @@ const NavBar = ({ onThemeToggle }) => {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
+    <nav className={`nav ${scrolled || menuOpen ? "scrolled" : ""}`}>
       <div className="nav-inner">
         <ScrollLink
           to="home"
@@ -65,13 +70,14 @@ const NavBar = ({ onThemeToggle }) => {
             className="nav-burger"
             onClick={() => setMenuOpen((o) => !o)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
           >
             {menuOpen ? <FiX /> : <FiMenu />}
           </button>
         </div>
       </div>
 
-      <div className={`nav-overlay ${menuOpen ? "open" : ""}`}>
+      <div className={`nav-panel ${menuOpen ? "open" : ""}`}>
         <ul>
           {LINKS.map((link) => (
             <li key={link.to}>

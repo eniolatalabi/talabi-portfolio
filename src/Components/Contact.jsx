@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
 import { ImSpinner8 } from "react-icons/im";
@@ -22,8 +22,17 @@ const Contact = () => {
   const [formData, setFormData] = useState(emptyForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState(null);
+  const textareaRef = useRef(null);
 
   const accessKey = import.meta.env.VITE_WEB3FORMS_KEY;
+
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (el) {
+      el.style.height = "auto";
+      el.style.height = `${el.scrollHeight}px`;
+    }
+  }, [formData.message]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -41,7 +50,7 @@ const Contact = () => {
       setStatus({ success: false, message: `Form not configured. Email me at ${CONTACT_EMAIL}.` });
       return;
     }
-    if (event.target.botcheck && event.target.botcheck.value) return;
+    if (event.target.botcheck && event.target.botcheck.checked) return;
 
     setIsSubmitting(true);
     setStatus(null);
@@ -111,7 +120,15 @@ const Contact = () => {
 
             <div className="field">
               <label htmlFor="message">Message</label>
-              <textarea id="message" name="message" rows="4" value={formData.message} onChange={handleChange} required />
+              <textarea
+                id="message"
+                name="message"
+                rows="1"
+                ref={textareaRef}
+                value={formData.message}
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <button type="submit" className="contact-send" disabled={isSubmitting}>
